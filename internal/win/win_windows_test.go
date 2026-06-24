@@ -2,12 +2,15 @@ package win
 
 import (
 	"testing"
-	"unsafe"
+	"unsafe" // lets us measure the exact byte-size of our structures
 )
 
-// TestInputLayout guards the INPUT memory layout that SendInput relies on.
-// On 64-bit Windows the structure is 40 bytes, and the keyboard variant must
-// fit within the mouse-sized union slot it is overlaid onto.
+// TestInputLayout is an automated safety check on the memory shapes we hand to
+// Windows' SendInput. Windows is very particular here: our INPUT structure
+// must be exactly 40 bytes on 64-bit Windows, and the keyboard variant must
+// fit inside the (larger) mouse-shaped slot we reuse for it. If a future edit
+// accidentally changed these sizes, faking input could misbehave — this test
+// catches that early.
 func TestInputLayout(t *testing.T) {
 	if got := unsafe.Sizeof(input{}); got != 40 {
 		t.Errorf("sizeof(input) = %d, want 40", got)
