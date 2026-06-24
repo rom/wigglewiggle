@@ -43,4 +43,5 @@ back automatically when you sign in.
 - Tests: `go test ./internal/ui/` (host) and `GOOS=windows go vet ./...`.
 - Regenerate the tray icon: `go run ./tools/genicon`.
 
-See [docs/design.md](docs/design.md) for the full design.
+See [docs/design.md](docs/design.md) for the full design, or
+[docs/dokumentation.md](docs/dokumentation.md) for documentation in Swedish.
